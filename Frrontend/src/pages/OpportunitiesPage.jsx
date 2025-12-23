@@ -59,9 +59,18 @@ const OpportunitiesPage = () => {
         <div className="container">
             <h1 className="heading" style={{ marginBottom: '2rem' }}>Browse Volunteer Opportunities</h1>
 
-            <div className="card" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="card" style={{
+                marginBottom: '2rem',
+                display: 'flex',
+                gap: '1rem',
+                flexWrap: 'wrap',
+                backgroundColor: 'var(--primary-color)', /* Contrasting Green Background */
+                color: 'white',
+                border: 'none',
+                boxShadow: 'var(--shadow-lg)'
+            }}>
                 <div style={{ flex: 1, minWidth: '200px' }}>
-                    <label className="form-label">Search Keywords</label>
+                    <label className="form-label" style={{ color: 'white' }}>Search Keywords</label>
                     <input
                         type="text"
                         name="search"
@@ -69,10 +78,11 @@ const OpportunitiesPage = () => {
                         placeholder="Title, description, skills..."
                         value={filters.search}
                         onChange={handleFilterChange}
+                        style={{ border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}
                     />
                 </div>
                 <div style={{ flex: 1, minWidth: '200px' }}>
-                    <label className="form-label">Location</label>
+                    <label className="form-label" style={{ color: 'white' }}>Location</label>
                     <input
                         type="text"
                         name="location"
@@ -80,6 +90,7 @@ const OpportunitiesPage = () => {
                         placeholder="Filter by city..."
                         value={filters.location}
                         onChange={handleFilterChange}
+                        style={{ border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}
                     />
                 </div>
             </div>
