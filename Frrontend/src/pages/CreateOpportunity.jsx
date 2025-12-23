@@ -10,6 +10,7 @@ const CreateOpportunity = () => {
         location: '',
         date: '',
         skillsRequired: '',
+        contactInfo: '',
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ const CreateOpportunity = () => {
             };
 
             await api.post('/opportunities', dataToSubmit);
+            toast.success('Opportunity posted successfully');
             navigate('/dashboard-org');
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to create opportunity');
@@ -101,6 +103,18 @@ const CreateOpportunity = () => {
                             value={formData.skillsRequired}
                             onChange={handleChange}
                             placeholder="e.g. Gardening, Painting, Teaching"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="form-label">Contact Info (Optional)</label>
+                        <input
+                            type="text"
+                            name="contactInfo"
+                            className="form-input"
+                            value={formData.contactInfo}
+                            onChange={handleChange}
+                            placeholder="Email or Phone for applicants to contact"
                         />
                     </div>
 

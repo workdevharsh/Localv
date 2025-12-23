@@ -4,7 +4,7 @@ const Opportunity = require('../models/Opportunity');
 // @route   POST /api/opportunities
 // @access  Private (Organization only)
 const createOpportunity = async (req, res) => {
-    const { title, description, location, date, skillsRequired } = req.body;
+    const { title, description, location, date, skillsRequired, contactInfo } = req.body;
 
     try {
         const opportunity = new Opportunity({
@@ -14,6 +14,7 @@ const createOpportunity = async (req, res) => {
             location,
             date,
             skillsRequired,
+            contactInfo,
         });
 
         const createdOpportunity = await opportunity.save();
@@ -68,6 +69,7 @@ const updateOpportunity = async (req, res) => {
             opportunity.location = req.body.location || opportunity.location;
             opportunity.date = req.body.date || opportunity.date;
             opportunity.skillsRequired = req.body.skillsRequired || opportunity.skillsRequired;
+            opportunity.contactInfo = req.body.contactInfo || opportunity.contactInfo;
             opportunity.status = req.body.status || opportunity.status;
 
             const updatedOpportunity = await opportunity.save();

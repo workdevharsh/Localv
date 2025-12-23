@@ -23,6 +23,7 @@ const opportunitySchema = mongoose.Schema({
         required: true,
     },
     skillsRequired: [String],
+    contactInfo: String,
     status: {
         type: String,
         enum: ['open', 'closed'],

@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import api from '../api';
-import { FaMapMarkerAlt, FaCalendarAlt, FaBuilding, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaBuilding } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const OpportunityDetails = () => {
     const { id } = useParams();
@@ -12,7 +13,6 @@ const OpportunityDetails = () => {
     const [loading, setLoading] = useState(true);
     const [applying, setApplying] = useState(false);
     const [notes, setNotes] = useState('');
-    const [feedback, setFeedback] = useState(null);
 
     useEffect(() => {
         const fetchOpportunity = async () => {
@@ -37,20 +37,17 @@ const OpportunityDetails = () => {
         }
 
         setApplying(true);
-        setFeedback(null);
 
         try {
             await api.post('/applications', {
                 opportunityId: id,
                 notes,
             });
-            setFeedback({ type: 'success', message: 'Application submitted successfully!' });
+            toast.success('Your application was submitted successfully!');
             setApplying(false);
+            setNotes(''); // Clear notes
         } catch (error) {
-            setFeedback({
-                type: 'error',
-                message: error.response?.data?.message || 'Failed to apply'
-            });
+            toast.error(error.response?.data?.message || 'Failed to apply');
             setApplying(false);
         }
     };
@@ -102,41 +99,23 @@ const OpportunityDetails = () => {
                     </>
                 )}
 
-                {feedback && (
-                    <div style={{
-                        padding: '1rem',
-                        borderRadius: 'var(--radius)',
-                        marginBottom: '1.5rem',
-                        backgroundColor: feedback.type === 'success' ? '#dcfce7' : '#fee2e2',
-                        color: feedback.type === 'success' ? '#166534' : '#991b1b',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem'
-                    }}>
-                        {feedback.type === 'success' ? <FaCheckCircle /> : <FaExclamationCircle />}
-                        {feedback.message}
-                    </div>
-                )}
-
                 {user?.role === 'volunteer' && (
-                    !feedback || feedback.type !== 'success' ? (
-                        <form onSubmit={handleApply} style={{ marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
-                            <h3 className="subheading" style={{ fontSize: '1.1rem' }}>Interested? Apply Now</h3>
-                            <div className="form-group">
-                                <label className="form-label">Notes for the Organization (Optional)</label>
-                                <textarea
-                                    className="form-input"
-                                    rows="3"
-                                    value={notes}
-                                    onChange={(e) => setNotes(e.target.value)}
-                                    placeholder="Briefly explain why you're interested..."
-                                ></textarea>
-                            </div>
-                            <button type="submit" className="btn btn-primary" disabled={applying}>
-                                {applying ? 'Submitting...' : 'Apply for Opportunity'}
-                            </button>
-                        </form>
-                    ) : null
+                    <form onSubmit={handleApply} style={{ marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
+                        <h3 className="subheading" style={{ fontSize: '1.1rem' }}>Interested? Apply Now</h3>
+                        <div className="form-group">
+                            <label className="form-label">Notes for the Organization (Optional)</label>
+                            <textarea
+                                className="form-input"
+                                rows="3"
+                                value={notes}
+                                onChange={(e) => setNotes(e.target.value)}
+                                placeholder="Briefly explain why you're interested..."
+                            ></textarea>
+                        </div>
+                        <button type="submit" className="btn btn-primary" disabled={applying}>
+                            {applying ? 'Submitting...' : 'Apply for Opportunity'}
+                        </button>
+                    </form>
                 )}
 
                 {!user && (

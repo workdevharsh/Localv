@@ -25,7 +25,10 @@ const userSchema = mongoose.Schema({
     interests: [String],
     location: String,
     availability: String,
+    availability: String,
     organizationName: String, // If role is organization
+    organizationDescription: String,
+    phone: String,
 }, {
     timestamps: true,
 });

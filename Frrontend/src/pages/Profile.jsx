@@ -98,77 +98,142 @@ const Profile = () => {
 
             <div className="card">
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label className="form-label">Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            className="form-input"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    {user.role === 'organization' ? (
+                        <>
+                            <div className="form-group">
+                                <label className="form-label">Name of Organization</label>
+                                <input
+                                    type="text"
+                                    name="organizationName"
+                                    className="form-input"
+                                    value={formData.organizationName}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Community Helpers"
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Email (cannot be changed)</label>
-                        <input
-                            type="email"
-                            className="form-input"
-                            value={formData.email}
-                            disabled
-                            style={{ backgroundColor: '#f9fafb', cursor: 'not-allowed' }}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label className="form-label">Owner Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="form-input"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                        <div className="form-group">
-                            <label className="form-label">Location</label>
-                            <input
-                                type="text"
-                                name="location"
-                                className="form-input"
-                                placeholder="e.g. New York, NY"
-                                value={formData.location}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">Availability</label>
-                            <input
-                                type="text"
-                                name="availability"
-                                className="form-input"
-                                placeholder="e.g. Weekends, Mon-Fri"
-                                value={formData.availability}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
+                            <div className="form-group">
+                                <label className="form-label">Email (cannot be changed)</label>
+                                <input
+                                    type="email"
+                                    className="form-input"
+                                    value={formData.email}
+                                    disabled
+                                    style={{ backgroundColor: '#f9fafb', cursor: 'not-allowed' }}
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Skills (comma separated)</label>
-                        <input
-                            type="text"
-                            name="skills"
-                            className="form-input"
-                            placeholder="e.g. Teaching, Coding, First Aid"
-                            value={formData.skills}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label className="form-label">Location</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    className="form-input"
+                                    placeholder="e.g. New York, NY"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Interests (comma separated)</label>
-                        <input
-                            type="text"
-                            name="interests"
-                            className="form-input"
-                            placeholder="e.g. Environment, Education, Animals"
-                            value={formData.interests}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label className="form-label">Contact Info (Phone)</label>
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    className="form-input"
+                                    placeholder="+1 234 567 8900"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="form-group">
+                                <label className="form-label">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="form-input"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Email (cannot be changed)</label>
+                                <input
+                                    type="email"
+                                    className="form-input"
+                                    value={formData.email}
+                                    disabled
+                                    style={{ backgroundColor: '#f9fafb', cursor: 'not-allowed' }}
+                                />
+                            </div>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Location</label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        className="form-input"
+                                        placeholder="e.g. New York, NY"
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Availability</label>
+                                    <input
+                                        type="text"
+                                        name="availability"
+                                        className="form-input"
+                                        placeholder="e.g. Weekends, Mon-Fri"
+                                        value={formData.availability}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Skills (comma separated)</label>
+                                <input
+                                    type="text"
+                                    name="skills"
+                                    className="form-input"
+                                    placeholder="e.g. Teaching, Coding, First Aid"
+                                    value={formData.skills}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Interests (comma separated)</label>
+                                <input
+                                    type="text"
+                                    name="interests"
+                                    className="form-input"
+                                    placeholder="e.g. Environment, Education, Animals"
+                                    value={formData.interests}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </>
+                    )}
 
                     <div style={{ marginTop: '1rem', textAlign: 'right' }}>
                         <button type="submit" className="btn btn-primary">
