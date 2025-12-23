@@ -24,6 +24,7 @@ const Navbar = () => {
                             ) : (
                                 <Link to="/dashboard" className="nav-link">Dashboard</Link>
                             )}
+                            <Link to="/profile" className="nav-link">Profile</Link>
                             <button onClick={logout} className="btn btn-outline">Logout</button>
                         </>
                     ) : (

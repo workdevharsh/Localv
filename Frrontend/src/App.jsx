@@ -13,12 +13,17 @@ import OpportunityDetails from './pages/OpportunityDetails';
 import OpportunityApplications from './pages/OpportunityApplications';
 import './App.css';
 
+import Profile from './pages/Profile';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="app-layout">
           <Navbar />
+          <ToastContainer position="top-right" autoClose={3000} />
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -30,6 +35,7 @@ function App() {
               <Route path="/dashboard" element={<VolunteerDashboard />} />
               <Route path="/dashboard-org" element={<OrganizationDashboard />} />
               <Route path="/create-opportunity" element={<CreateOpportunity />} />
+              <Route path="/profile" element={<Profile />} />
               {/* More routes to be added */}
             </Routes>
           </main>
