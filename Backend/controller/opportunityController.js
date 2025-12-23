@@ -1,0 +1,111 @@
+const Opportunity = require('../models/Opportunity');
+
+// @desc    Create a new opportunity
+// @route   POST /api/opportunities
+// @access  Private (Organization only)
+const createOpportunity = async (req, res) => {
+    const { title, description, location, date, skillsRequired } = req.body;
+
+    try {
+        const opportunity = new Opportunity({
+            organization: req.user._id,
+            title,
+            description,
+            location,
+            date,
+            skillsRequired,
+        });
+
+        const createdOpportunity = await opportunity.save();
+        res.status(201).json(createdOpportunity);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Get all opportunities
+// @route   GET /api/opportunities
+// @access  Public
+const getOpportunities = async (req, res) => {
+    try {
+        const opportunities = await Opportunity.find().populate('organization', 'name organizationName');
+        res.json(opportunities);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Get opportunity by ID
+// @route   GET /api/opportunities/:id
+// @access  Public
+const getOpportunityById = async (req, res) => {
+    try {
+        const opportunity = await Opportunity.findById(req.params.id).populate('organization', 'name organizationName');
+        if (opportunity) {
+            res.json(opportunity);
+        } else {
+            res.status(404).json({ message: 'Opportunity not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Update opportunity
+// @route   PUT /api/opportunities/:id
+// @access  Private (Organization only)
+const updateOpportunity = async (req, res) => {
+    try {
+        const opportunity = await Opportunity.findById(req.params.id);
+
+        if (opportunity) {
+            if (opportunity.organization.toString() !== req.user._id.toString()) {
+                return res.status(401).json({ message: 'Not authorized to update this opportunity' });
+            }
+
+            opportunity.title = req.body.title || opportunity.title;
+            opportunity.description = req.body.description || opportunity.description;
+            opportunity.location = req.body.location || opportunity.location;
+            opportunity.date = req.body.date || opportunity.date;
+            opportunity.skillsRequired = req.body.skillsRequired || opportunity.skillsRequired;
+            opportunity.status = req.body.status || opportunity.status;
+
+            const updatedOpportunity = await opportunity.save();
+            res.json(updatedOpportunity);
+        } else {
+            res.status(404).json({ message: 'Opportunity not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Delete opportunity
+// @route   DELETE /api/opportunities/:id
+// @access  Private (Organization only)
+const deleteOpportunity = async (req, res) => {
+    try {
+        const opportunity = await Opportunity.findById(req.params.id);
+
+        if (opportunity) {
+            if (opportunity.organization.toString() !== req.user._id.toString()) {
+                return res.status(401).json({ message: 'Not authorized to delete this opportunity' });
+            }
+
+            await opportunity.deleteOne();
+            res.json({ message: 'Opportunity removed' });
+        } else {
+            res.status(404).json({ message: 'Opportunity not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = {
+    createOpportunity,
+    getOpportunities,
+    getOpportunityById,
+    updateOpportunity,
+    deleteOpportunity,
+};
