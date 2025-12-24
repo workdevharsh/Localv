@@ -155,6 +155,7 @@ const getUserProfile = async (req, res) => {
 // @route   PUT /api/auth/profile
 // @access  Private
 const updateUserProfile = async (req, res) => {
+    console.log('Update Profile Request Body:', req.body); // Debug Log
     try {
         const user = await User.findById(req.user._id);
 
@@ -180,6 +181,7 @@ const updateUserProfile = async (req, res) => {
             }
 
             const updatedUser = await user.save();
+            console.log('User Updated Successfully:', updatedUser); // Debug Log
 
             res.json({
                 _id: updatedUser._id,
@@ -196,9 +198,11 @@ const updateUserProfile = async (req, res) => {
                 phone: updatedUser.phone,
             });
         } else {
+            console.log('User Not Found for ID:', req.user._id); // Debug Log
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
+        console.error('Update Profile Error:', error); // Debug Log
         res.status(500).json({ message: error.message });
     }
 };

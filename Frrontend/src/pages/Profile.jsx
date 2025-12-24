@@ -84,7 +84,9 @@ const Profile = () => {
 
         } catch (error) {
             console.error('Error updating profile:', error);
-            setMessage({ type: 'error', content: error.response?.data?.message || 'Failed to update profile.' });
+            // Display detailed error if available
+            const errorMsg = error.response?.data?.message || error.message || 'Failed to update profile.';
+            setMessage({ type: 'error', content: errorMsg });
         }
     };
 
