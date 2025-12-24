@@ -3,7 +3,7 @@ import api from '../api';
 import AuthContext from '../context/AuthContext';
 
 const Profile = () => {
-    const { user, setUser } = useContext(AuthContext); // Assuming AuthContext exposes setUser to update local state logic
+    const { user, setUser } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -11,6 +11,9 @@ const Profile = () => {
         availability: '',
         skills: '',
         interests: '',
+        organizationName: '',
+        organizationDescription: '',
+        phone: ''
     });
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState({ type: '', content: '' });
@@ -26,6 +29,9 @@ const Profile = () => {
                     availability: data.availability || '',
                     skills: data.skills ? data.skills.join(', ') : '',
                     interests: data.interests ? data.interests.join(', ') : '',
+                    organizationName: data.organizationName || '',
+                    organizationDescription: data.organizationDescription || '',
+                    phone: data.phone || ''
                 });
                 setLoading(false);
             } catch (error) {
@@ -50,21 +56,26 @@ const Profile = () => {
             const skillsArray = formData.skills.split(',').map(s => s.trim()).filter(Boolean);
             const interestsArray = formData.interests.split(',').map(s => s.trim()).filter(Boolean);
 
-            const { data } = await api.put('/auth/profile', {
+            const payload = {
                 name: formData.name,
                 location: formData.location,
                 availability: formData.availability,
                 skills: skillsArray,
                 interests: interestsArray,
-                // Add organizationName if needed based on role
-            });
+                phone: formData.phone,
+                organizationName: formData.organizationName,
+                organizationDescription: formData.organizationDescription
+            };
 
-            // Update AuthContext user if needed (optional, depending on how AuthContext works)
-            // setUser(data); 
+            const { data } = await api.put('/auth/profile', payload);
+
+            // Update AuthContext user with new data
+            setUser(data);
+            localStorage.setItem('userInfo', JSON.stringify(data));
 
             setMessage({ type: 'success', content: 'Profile updated successfully!' });
 
-            // Re-format arrays to string for display
+            // Re-format arrays to string for display if needed
             setFormData(prev => ({
                 ...prev,
                 skills: data.skills ? data.skills.join(', ') : '',
@@ -121,6 +132,19 @@ const Profile = () => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Description</label>
+                                <textarea
+                                    name="organizationDescription"
+                                    className="form-input"
+                                    value={formData.organizationDescription}
+                                    onChange={handleChange}
+                                    placeholder="Describe your organization's mission..."
+                                    rows="4"
+                                    style={{ resize: 'vertical' }}
                                 />
                             </div>
 

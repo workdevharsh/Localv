@@ -15,11 +15,28 @@ const opportunitySchema = mongoose.Schema({
         required: true,
     },
     location: {
+        type: String, // Keep the string address
+        required: true,
+    },
+    coordinates: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point',
+        },
+        coordinates: {
+            type: [Number], // [longitude, latitude]
+            index: '2dsphere',
+        },
+    },
+    category: {
         type: String,
+        enum: ['Education', 'Health', 'Environment', 'Community', 'Other'],
+        default: 'Other',
         required: true,
     },
     date: {
-        type: String, // Can be Date type, but String for flexibility in this MVP validation
+        type: String,
         required: true,
     },
     skillsRequired: [String],

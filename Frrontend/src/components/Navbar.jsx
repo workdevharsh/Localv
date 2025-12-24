@@ -14,8 +14,8 @@ const Navbar = () => {
                     <span>VolunteerConnect</span>
                 </Link>
                 <div className="nav-links">
-                    <Link to="/" className="nav-link">Home</Link>
                     <Link to="/opportunities" className="nav-link">Opportunities</Link>
+                    <Link to="/map" className="nav-link">Map View</Link>
 
                     {user ? (
                         <>

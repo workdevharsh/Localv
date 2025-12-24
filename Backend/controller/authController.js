@@ -38,7 +38,7 @@ const googleAuth = async (req, res) => {
             // User does not exist, create new
             // We'll set a random password as they won't use it
             const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
-            
+
             user = await User.create({
                 name,
                 email,
@@ -140,6 +140,8 @@ const getUserProfile = async (req, res) => {
                 location: user.location || '',
                 availability: user.availability || '',
                 organizationName: user.organizationName,
+                organizationDescription: user.organizationDescription,
+                phone: user.phone,
             });
         } else {
             res.status(404).json({ message: 'User not found' });
@@ -165,6 +167,7 @@ const updateUserProfile = async (req, res) => {
             // Update profile fields
             user.location = req.body.location || user.location;
             user.availability = req.body.availability || user.availability;
+            user.phone = req.body.phone || user.phone;
 
             // Handle arrays (skills/interests) - replace or merge based on need. 
             // Here we replace if provided.
@@ -173,6 +176,7 @@ const updateUserProfile = async (req, res) => {
 
             if (user.role === 'organization') {
                 user.organizationName = req.body.organizationName || user.organizationName;
+                user.organizationDescription = req.body.organizationDescription || user.organizationDescription;
             }
 
             const updatedUser = await user.save();
@@ -188,6 +192,8 @@ const updateUserProfile = async (req, res) => {
                 location: updatedUser.location,
                 availability: updatedUser.availability,
                 organizationName: updatedUser.organizationName,
+                organizationDescription: updatedUser.organizationDescription,
+                phone: updatedUser.phone,
             });
         } else {
             res.status(404).json({ message: 'User not found' });

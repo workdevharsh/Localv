@@ -11,6 +11,7 @@ import OrganizationDashboard from './pages/OrganizationDashboard';
 import OpportunitiesPage from './pages/OpportunitiesPage';
 import OpportunityDetails from './pages/OpportunityDetails';
 import OpportunityApplications from './pages/OpportunityApplications';
+import MapPage from './pages/MapPage';
 import './App.css';
 
 import Profile from './pages/Profile';
@@ -36,6 +37,7 @@ function App() {
               <Route path="/dashboard-org" element={<OrganizationDashboard />} />
               <Route path="/create-opportunity" element={<CreateOpportunity />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/map" element={<MapPage />} />
               {/* More routes to be added */}
             </Routes>
           </main>

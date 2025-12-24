@@ -8,6 +8,7 @@ const CreateOpportunity = () => {
         title: '',
         description: '',
         location: '',
+        category: 'Community', // Default
         date: '',
         skillsRequired: '',
         contactInfo: '',
@@ -79,6 +80,22 @@ const CreateOpportunity = () => {
                             placeholder="City, Area, or Remote"
                             required
                         />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="form-label">Category</label>
+                        <select
+                            name="category"
+                            className="form-input"
+                            value={formData.category}
+                            onChange={handleChange}
+                        >
+                            <option value="Education">Education</option>
+                            <option value="Health">Health</option>
+                            <option value="Environment">Environment</option>
+                            <option value="Community">Community Service</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
